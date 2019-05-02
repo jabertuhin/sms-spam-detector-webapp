@@ -17,11 +17,11 @@ def home():
 def predict():
     nb_spam_model = open('NB_spam_model.pkl', 'rb')
     clf = joblib.load(nb_spam_model)
-    cv = CountVectorizer()
+    cv_fit = pickle.load(open("vector.pickel", "rb"))
     if request.method == 'POST':
         message = request.form['message']
         data = [message]
-        vect = cv.transform(data).toarray()
+        vect = cv_fit.transform(data).toarray()
         my_prediction = clf.predict(vect)
     return render_template('result.html', prediction=my_prediction)
 
